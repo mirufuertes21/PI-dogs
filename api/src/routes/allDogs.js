@@ -1,28 +1,29 @@
-const axios = require('axios');
-const { Router }= require('express')
-const router = Router()
-const getApi = require('../controllers/getApi');
+//const axios = require('axios');
+const { Router }= require('express');
+const routerAllDogs = Router()
+const { getApiDB } = require('../controllers/getApi');
 require('dotenv').config();
-const { API_URL }= process.env;
-const { dogInfo } = require('../controllers/getApi')
+const getByName= require('../controllers/getByName')
 
-//breedsRouter.get('/', async (req,res)=>{
-//})
+// routerAllDogs.get('/dogs', async(req, res)=>{
 
-//ES UN ARRAY DE OBJETOS, tengo que recorrerlo con un for y traer los datos, mostar:
-// Imagen
-// Nombre
-// Temperamento
-// Peso
-router.get('/dogs', async(req, res)=>{
+//     const allDogs= await getApi()
+//     try{
+//         res.send(allDogs)
+//     }
+//     catch(error){
+//     res.status(404).send('No funka')
+// }})
+// console.log()
 
-    const allDogs= await getApi()
-    try{
-        res.send(allDogs)
-    }
-    catch(error){
-    res.status(404).send('No funka')
-}})
+routerAllDogs.get('/dogs', async(req, res)=>{
+    const { name }= req.query;
+        if(!name){
+            const allDogs= await getApiDB()
+            res.send(allDogs);
 
+        }const allDogs= await getByName(name);
+        res.send(allDogs);
+})
 
-module.exports= router;
+module.exports= routerAllDogs;
