@@ -24,7 +24,27 @@ const getApi= async() => {
     })
     return dogInfo;
 }
+const holi= async() => {
+    const link= await axios.get(`https://api.thedogapi.com/v1/breeds?api_key=${API_KEY}/`);
 
+    const dogInfo=  link.data.map((dog)=>{
+        // const doggys = apiInfo.data.map((temp) =>
+        // temp.temperament?.replace(/ /g, "").split(",")
+
+        return {
+            id: dog.id,
+            name: dog.name,
+            temperament: dog.temperament?.replace(/ /g, "").split(","),
+            weightMin:dog.weight.imperial.split(" - ")[0], //  split(" - ") [1,23,5,10]                     // [numero,nuero2][1]
+            weightMax:dog.weight.imperial.split(" - ")[1],
+            heightMin: dog.height.imperial.split(" - ")[0],
+            heightMax: dog.height.imperial.split(" - ")[1],
+            age: dog.life_span,
+            image: dog.image.url,
+        }
+    })
+    return dogInfo;
+}
 const hola2= async() => {
     const link= await axios.get(`https://api.thedogapi.com/v1/breeds?api_key=${API_KEY}/`);
 
